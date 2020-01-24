@@ -1,0 +1,180 @@
+#include <iostream>
+#include <stdio.h>
+#include <cstdlib>
+#include <fstream>
+#include <curses.h>
+
+using namespace std;
+
+string linia1, linia2, linia3, linia4, linia5, linia6, linia7, linia8;
+
+int main ()
+
+{
+{
+    string linia;
+    int nr_linii=1;
+    fstream plik;
+    plik.open("/Users/klaudiawisniewska/Desktop/wizytowka/bank.txt", ios::in); // sciezka dostepu do pliku tekstowego i danie programowi informacji by tu czytal z pliku
+
+    if(plik.good()==false) cout<<"Nie mozna otworzyc pliku!";
+
+    while (getline(plik, linia)) // getline pobiera nam cala linie tekstu, nawet ze spacjami, nie tylko jeden wyraz (pobrac z plik, zapisac w zmiennej string linia)
+    {
+        switch (nr_linii)
+        {
+            case 1: linia1=linia; break;
+            case 2: linia2=linia; break;
+            case 3: linia3=linia; break;
+            case 4: linia4=linia; break;
+            case 5: linia5=linia; break;
+            case 6: linia6=linia; break;
+            case 7: linia7=linia; break;
+            case 8: linia8=linia; break;
+        }
+        nr_linii++;
+    }
+
+    plik.close(); // odczytywanie z pliku zakonczone
+{
+
+    cout<<linia1<<endl; //wyswietlenie wszystkich linii z pliku
+    cout<<linia2<<endl;
+    cout<<linia3<<endl;
+    cout<<linia4<<endl;
+    cout<<linia5<<endl;
+    cout<<linia6<<endl;
+    cout<<linia7<<endl;
+    cout<<linia8<<endl;
+}
+}
+
+
+
+
+    bool zalogowano = false; // bool to  typ logiczny prawda lub falsz
+    int proby = 0;
+    string login;
+    string haslo;
+    int opcja;
+    int stan1, stan2, wyplata, wplata;
+    stan1=1500;
+    stan2=30;
+
+    while( !zalogowano && proby < 3 )  // uzytkownik ma tylko 3 proby logowania
+    {
+        cout<<"Podaj login: ";
+        getline(cin,login,'\n'); // n robi to samo co endl
+        cout<<"Podaj haslo: ";
+        getline(cin,haslo,'\n');
+
+
+        if((login=="Klaudia"&& haslo=="wisnia")||(login=="Marek"&& haslo=="jablko")) // uzytkownik moze zalogowac sie tylko jesli login i haslo pierwsze sa poprawne lub login i haslo drugie (jednoczesnie)
+        {
+            zalogowano=true;
+        cout<<"Zalogowales sie pomyslnie"<<endl;
+        break;
+        }
+        else
+        {
+        cout<<"Niepoprawne dane."<<endl;
+        }
+  ++proby;
+    }
+    if(!zalogowano)
+{
+    cout << "Wykorzystales 3 proby logowania"; // po trzech nieudanych probach logowania program sie konczy
+    return - 1;
+}
+for(;;) // petla nieskonczona (moze byc, poniewaz jest opcja wyloguj)
+{
+    cout<<"---------------------------"<<endl;
+    cout<<"        MENU GLOWNE          "<<endl;
+    cout<<"---------------------------"<<endl;
+    cout<<"Co chcesz zrobić?"<<endl;
+    cout<<"1 - sprawdz stan konta"<<endl;
+    cout<<"2 - wyplac"<<endl;
+    cout<<"3 - wplac"<<endl;
+    cout<<"4 - wyloguj"<<endl;
+    cin>>opcja;
+
+switch(opcja)
+{
+    case 1:
+    if (login=="Klaudia"&&haslo=="wisnia")
+{
+    cout<<"Twoj stan konta to: "<<stan1<<" pln"<<endl;
+    break; // break, by po wykonaniu jakiegos warunku nie wykonywaly sie kolejne
+}
+    if (login=="Marek"&&haslo=="jablko")
+{
+    cout<<"Twoj stan konta to: "<<stan2<<" pln"<<endl;
+    break;
+}
+
+case 2:
+if (login=="Klaudia"&&haslo=="wisnia")
+{
+    cout<<"Ile pieniedzy chcesz wyplacic?"<<endl;
+    cin>>wyplata;
+    if (wyplata>stan1)
+    {
+        cout<<"Nie masz wystarczajacych srodkow na koncie!"<<endl;
+    }
+    else
+    {
+    stan1=stan1-wyplata;
+    cout<<"Wyplacono. Twoj stan konta to: "<<stan1<<"pln"<<endl;
+    }
+    break;
+}
+    if (login=="Marek"&&haslo=="jablko")
+{
+    cout<<"Ile pieniedzy chcesz wyplacic?"<<endl;
+    cin>>wyplata;
+    if (wyplata>stan2)
+    {
+        cout<<"Nie masz wystarczajacych srodkow na koncie!"<<endl;
+    }
+    else
+    {
+    stan2=stan2-wyplata;
+    cout<<"Wyplacono. Twoj stan konta to: "<<stan2<<" pln"<<endl;
+    }
+    break;
+}
+case 3:
+if (login=="Klaudia"&&haslo=="wisnia")
+{
+    cout<<"Ile pieniedzy chcesz wplacic?"<<endl;
+    cin>>wplata;
+    stan1=stan1+wplata;
+    cout<<"Wplacono. Twoj stan konta to: "<<stan1<<" pln"<<endl;
+    break;
+}
+    if (login=="Marek"&&haslo=="jablko")
+{
+    cout<<"Ile pieniedzy chcesz wplacic?"<<endl;
+    cin>>wplata;
+    stan2=stan2+wplata;
+    cout<<"Wplacono. Twoj stan konta to: "<<stan2<<" pln"<<endl;
+    break;
+}
+case 4:
+if (login=="Klaudia"&&haslo=="wisnia")
+{
+    exit(0); // exit do zamkniecia programu po wybraniu opcji wyloguj
+    break;
+}
+    if (login=="Marek"&&haslo=="jablko")
+{
+    exit(0);
+    break;
+    default: cout<<"Nie ma takiej opcji w menu!"; // jesli ktos wybierze numer, ktorego nie ma w menu
+}
+}
+getchar(); getchar(); // po nacisnieciu klawisza
+system("clear");  // program sie czysci i ponownie wyswietla menu
+}
+return 0;
+}
